@@ -12,9 +12,9 @@ llr = function(x, y, z, omega) {
 }
 
 compute_f_hat = function(z, x, y, omega) {
-  Wz = make_weight_matrix(z, x, omega)
+  Wz = ifelse((abs(x - z) / omega) < 1, (1 - abs((x - z) / omega)^3)^3, 0)
   X = make_predictor_matrix(x)
-  f_hat = c(1, z) %*% solve(t(X) %*% Wz %*% X) %*% t(X) %*% Wz %*% y
+  f_hat = c(1, z) %*% solve(t(X) %*% apply(X, 2, function(x) Wz*x)) %*% t(X) %*% (Wz*y)
   return(f_hat)
 }
 
