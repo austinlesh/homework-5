@@ -15,7 +15,7 @@ compute_f_hat = function(z, x, y, omega) {
   r = abs(x - z) / omega
   Wz = sapply(r, W)
   X = make_predictor_matrix(x)
-  f_hat = c(1, z) %*% solve(t(X) %*% apply(X, 2, function(x) Wz*x)) %*% t(X) %*% mapply(function(i, j) i * j, Wz, y)
+  f_hat = c(1, z) %*% solve(t(X) %*% apply(X, 2, function(x) Wz*x)) %*% t(X) %*% (Wz*y)
   return(f_hat)
 }
 
